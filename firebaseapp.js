@@ -11,26 +11,19 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-//var database = firebase.database();
 
 var uiConfig = {
 	callbacks: {
-	    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-	    	// User successfully signed in.
+	    signInSuccessWithAuthResult: function(authResult, redirectUrl) { // User successfully signed in.
 	    	return false;
-	    },
-	    uiShown: function() {
-	    	//document.getElementById('loader').style.display = 'none';
 	    }
   	},
 	signInFlow: 'popup',
 	signInSuccessUrl: '#',
-	signInOptions: [
-		firebase.auth.EmailAuthProvider.PROVIDER_ID
-	],
-	// Terms of service url/callback.
+	signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+	// TODO Terms of service url/callback.
 	tosUrl: '<your-tos-url>',
-	// Privacy policy url/callback.
+	// TODO Privacy policy url/callback.
 	privacyPolicyUrl: function() {
 		window.location.assign('<your-privacy-policy-url>');
 	}
@@ -38,12 +31,6 @@ var uiConfig = {
 
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 ui.start('#firebaseui-auth-container', uiConfig);
-
-/*firebase.initializeApp({
-  apiKey: 'AIzaSyCJuUb2TnP3EFw1IFYypHY6K8AUZpuiQeE',
-  authDomain: 'api-project-797042688460.firebaseapp.com',
-  projectId: 'api-project-797042688460'
-});*/
 
 var db = firebase.firestore();
 
@@ -93,7 +80,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 // JQUERY
 
-document.getElementById('addProjectButton').onclick = function() {
+document.getElementById('addProjectButton').onclick = function() { // TODO Create command for add project
 	db.collection("projects").add({
 		userId: document.getElementById('userIdInput').value,
 		projectName: document.getElementById('currProjNameInput').value,
