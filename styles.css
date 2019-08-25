@@ -13,6 +13,14 @@ a {
     font-size: 18px !important;
 
 }
+#switchMode {
+    transition: 0.3s ease all;
+    cursor: pointer;
+}
+#switchMode:hover {
+    color: #6A49F6;
+    text-decoration: underline;
+}
 #bodyContainer {
     margin: 0 auto;
     height: 100%;
@@ -69,6 +77,8 @@ a {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     padding: 20px;
     position: relative;
+    overflow-x: none;
+    overflow-y: scroll;
 }
 #lineNumbers, #compiledCodeOutput {
     font-family: Menlo, "Courier New", monospace !important;
