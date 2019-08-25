@@ -28,18 +28,16 @@
 				</table>
 	        </div>
 	        <div id="input">
-	        	<div id="workflowTable"></div>
-	        	<div class="workflowStep purple"><div class="type">...</div><div class="content" id="interimText"><span>Press F to speak.</span></div></div>
-        		<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px;">INPUT</div>
+	        	<div id="workflowTable" ng-show="currMode === 0"></div>
+	        	<div class="workflowStep purple" ng-show="currMode === 0"><div class="type">...</div><div class="content" id="interimText"><span>Press F to speak.</span></div></div>
+				<textarea id="manualTextarea" style="width: 100%; height: 100%; border: 0; outline: none; resize: none; font-size: 16px;" ng-show="currMode === 1" placeholder="Type code..."></textarea>
+				<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px;">INPUT | <span id="switchMode" ng-click="switchMode()"><span ng-show="currMode === 0">Manual</span><span ng-show="currMode === 1">Speech</span> <b>&#x2192;</b></span></div>
 			</div>
         	<div id="output">
 				<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px; color: lime;">OUTPUT</div>
-				<table style="width: 100%;">
-					<tr style="width: 100%;">
-						<td id="lineNumbers" style="width: 20px;"></td>
-						<td id="compiledCodeOutput"></td>
-					</tr>
-				</table>
+				<div id="compiledCodeOutput">
+
+				</div>
         	</div>
         	<div id="projects" style="overflow: hidden;">
         		<h3 style="margin: 0 0 10px 0; text-align: center;">Projects</h3>
