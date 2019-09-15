@@ -1,11 +1,19 @@
 var app = angular.module("verbal-coding", []);
 
+var currentlySpeaking = false;
+
 app.directive('myEnter', function () {
     return function ($scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
         	switch (event.which) {
             	case 70:
-            		$scope.toggleRecording();
+            		if (currentlySpeaking) {
+            			$scope.stopRecording();
+					}
+            		else {
+						$scope.toggleRecording();
+					}
+					currentlySpeaking = !currentlySpeaking;
           			break;
 				case 74: // TODO find correct key
 					console.log("clicked compile");
@@ -81,13 +89,23 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		};
     };
 
+	var colors = ['output', 'text', 'hello', 'world'];
+	var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + colors.join(' | ') + ' ;';
+
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+	window.SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
+
     var finalTranscript = '';
     let recognition = new window.SpeechRecognition();
     recognition.interimResults = true;
     recognition.lang = 'en-US';
     recognition.maxAlternatives = 1;
-    recognition.continuous = false;
+    recognition.continuous = true;
+
+	var speechRecognitionList = new window.SpeechGrammarList();
+	speechRecognitionList.addFromString(grammar, 1);
+	recognition.grammars = speechRecognitionList;
+
     recognition.onresult = (event) => {
 		let interimTranscript = '';
 		for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
@@ -212,6 +230,10 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 			};
 		});
 	};
+
+    $scope.stopRecording = function() {
+    	recognition.stop();
+	};
     
     $scope.toggleRecording = function() {
 		if ($scope.currStep === 1) {
@@ -228,7 +250,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 					$scope.currentlyTalking = false;
 					addToWorkflow({
 						type: "Command",
-						content: finalTranscript.trim().toLowerCase(),
+						content: fixText(finalTranscript.trim().toLowerCase()),
 						id: new Date().getTime()
 					});
 
@@ -387,6 +409,14 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 			});
 		}
     };
+
+	var keys = document.getElementsByClassName("key");
+	for (var k=0; k<keys.length; k++) {
+		var currKey = keys[k];
+		currKey.onclick = function() {
+			speak(this.innerHTML, function() {$scope.currentlyTalking = false;});
+		}
+	}
 }]);
 
 function titleCase(str) {
@@ -640,5 +670,53 @@ document.getElementById("compiledCodeButton").onclick = function() {
 	}
 	console.log(compiledCode);
 	//compiledCode = compiledCode.replace(/\n/g, "<br/>");
-
 };
+
+function fixText(code) {
+	if (code.startsWith("put")) return code.replace("put", "output");
+	return code;
+}
+
+// Make the DIV element draggable:
+dragElement(document.getElementById("keyboard"));
+
+function dragElement(elmnt) {
+	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	if (document.getElementById(elmnt.id + "header")) {
+		// if present, the header is where you move the DIV from:
+		document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+	} else {
+		// otherwise, move the DIV from anywhere inside the DIV:
+		elmnt.onmousedown = dragMouseDown;
+	}
+
+	function dragMouseDown(e) {
+		e = e || window.event;
+		e.preventDefault();
+		// get the mouse cursor position at startup:
+		pos3 = e.clientX;
+		pos4 = e.clientY;
+		document.onmouseup = closeDragElement;
+		// call a function whenever the cursor moves:
+		document.onmousemove = elementDrag;
+	}
+
+	function elementDrag(e) {
+		e = e || window.event;
+		e.preventDefault();
+		// calculate the new cursor position:
+		pos1 = pos3 - e.clientX;
+		pos2 = pos4 - e.clientY;
+		pos3 = e.clientX;
+		pos4 = e.clientY;
+		// set the element's new position:
+		elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+		elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	}
+
+	function closeDragElement() {
+		// stop moving when mouse button is released:
+		document.onmouseup = null;
+		document.onmousemove = null;
+	}
+}

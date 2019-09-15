@@ -229,3 +229,38 @@ a {
 .bar:nth-child(8)  { left: 99px; animation-duration: 419ms; }
 .bar:nth-child(9)  { left: 113px; animation-duration: 487ms; }
 .bar:nth-child(10) { left: 127px; animation-duration: 442ms; }
+
+#keyboard {
+    position: absolute;
+    z-index: 9;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    text-align: center;
+    width: 300px;
+    height: 295px;
+    bottom: 10px;
+    left: 10px;
+}
+
+#keyboardheader {
+    padding: 10px 0;
+    cursor: move;
+    z-index: 10;
+    background-color: #6A49F6;
+    width: 300px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+#keyboard .key {
+    margin: 5px 10px;
+    padding: 5px;
+    background-color: #f1f1f1;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    cursor: pointer;
+}
+
+#keyboard .key:hover {
+    background-color: #A255FF;
+    color: white;
+}
