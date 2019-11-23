@@ -18,6 +18,7 @@ var uiConfig = {
 	    	return false;
 	    }
   	},
+    credentialHelper: firebaseui.auth.CredentialHelper.NONE,
 	signInFlow: 'popup',
 	signInSuccessUrl: '#',
 	signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
@@ -45,7 +46,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   	document.getElementById('welcomeDiv').style.display = "none";
   	$('#bodyContainer').fadeIn();
 
-  	db.collection("projects").where("userId", "==", user.uid)
+  	/*db.collection("projects").where("userId", "==", user.uid)
   		.get()
   		.then(function(querySnapshot) {
   			var projectCount = 0;
@@ -66,13 +67,13 @@ firebase.auth().onAuthStateChanged(function(user) {
   		})
   		.catch(function(error) {
   			console.log("Error getting documents");
-  		});
+  		});*/
   } else {
-  	document.getElementById('userIdInput').value = "";
+  	/*document.getElementById('userIdInput').value = "";
     document.getElementById('bodyContainer').style.display = "none";
     document.getElementById('firebaseui-auth-container').style.display = "flex";
     document.getElementsByTagName("BODY")[0].classList.add("notSignedIn");
-    document.getElementById('welcomeDiv').style.display = "flex";
+    document.getElementById('welcomeDiv').style.display = "flex";*/
   }
 });
 
@@ -94,7 +95,7 @@ document.getElementById('addProjectButton').onclick = function() { // TODO Creat
 	});
 };
 
-document.getElementById('signOut').onclick = function() {
+/*document.getElementById('signOut').onclick = function() {
 	firebase.auth().signOut().then(function () {
 		document.getElementById('bodyContainer').style.display = "none";
 		document.getElementById('firebaseui-auth-container').style.display = "flex";
@@ -102,4 +103,14 @@ document.getElementById('signOut').onclick = function() {
 	}).catch(function (error) {
 		console.log("You couldn't sign out");
 	});
+};*/
+
+document.getElementById('manualTextarea').oninput = function() {
+	var lines = document.getElementById('manualTextarea').value.split("\n").length;
+	var lineNumberHTML = "";
+
+	for (var l=1; l<=lines; l++) {
+		lineNumberHTML += l + "\n";
+	}
+	document.getElementById("lineNumbersTextarea").value = lineNumberHTML;
 };

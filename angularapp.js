@@ -6,16 +6,20 @@ app.directive('myEnter', function () {
     return function ($scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
         	switch (event.which) {
-            	case 70:
-            		if (currentlySpeaking) {
-            			$scope.stopRecording();
+            	case 70: // F
+            		if ($scope.currMode === 0) {
+						if (currentlySpeaking) {
+							$scope.stopRecording();
+						} else {
+							$scope.toggleRecording();
+						}
+						currentlySpeaking = !currentlySpeaking;
 					}
-            		else {
-						$scope.toggleRecording();
-					}
-					currentlySpeaking = !currentlySpeaking;
           			break;
-				case 74: // TODO find correct key
+				case 74: // J
+					$scope.deleteLastStatement();
+					break;
+				case 32: // SPACE
 					console.log("clicked compile");
 					$scope.compile();
 					/*var inputCode = "";
@@ -68,8 +72,8 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 
     	var message = new SpeechSynthesisUtterance();
     	var voices = window.speechSynthesis.getVoices();
-    	message.voice = voices[48];
-    	message.rate = 1;
+    	message.voice = voices[0];
+    	message.rate = 0.75;
     	message.pitch = 1;
     	message.text = text;
 
@@ -147,11 +151,32 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 				}
 			}
 		});
+    	$scope.updateStatementLineNumbers();
     };
 
     $scope.switchMode = function() {
 		if ($scope.currMode === 0) $scope.currMode = 1;
 		else $scope.currMode = 0;
+	};
+
+    $scope.deleteLastStatement = function() {
+		var workflowTable = document.getElementById("workflowTable").childNodes;
+		workflowTable[workflowTable.length-1].remove();
+		$scope.updateStatementLineNumbers();
+		document.getElementById("deleteStatementAudio").play();
+	};
+
+    $scope.updateStatementLineNumbers = function() {
+		var workflowTable = document.getElementById("workflowTable").childNodes;
+		var currentLine = 1;
+		for (var workflowStep of workflowTable) {
+			var childNodes = workflowStep.childNodes;
+			for (var childNode of childNodes) {
+				if (childNode.classList.contains("type")) {
+					childNode.innerHTML = currentLine++;
+				}
+			}
+		}
 	};
 
     $scope.compile = function() {
@@ -238,7 +263,8 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
     $scope.toggleRecording = function() {
 		if ($scope.currStep === 1) {
 			$scope.currentlyTalking = false;
-			speak("Say a statement.", function () {
+			document.getElementById("startSpeakingAudio").play();
+			speak("", function () {
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -260,32 +286,32 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 						$scope.currStep = 4;
 						$scope.currCodeBlock++;
 						$scope.codeBlocks.push({type: "while"});
-						speak("Okay, I am processing your request. Press F to continue.");
+						speak("Okay, I will start your while loop. Press F to say your next statement.");
 					}
 					else if (str.indexOf("declare for loop") !== -1) {
 						console.log("declare for loop");
 						$scope.currStep = 5;
 						$scope.currCodeBlock++;
 						$scope.codeBlocks.push({type: "for"});
-						speak("Okay, I am processing your request. Press F to continue.");
+						speak("Okay, I will start your for loop. Press F to say your next statement.");
 					}
 					else if (str.indexOf("stop for loop") !== -1) {
 						console.log("stop for loop");
 						$scope.currStep = 1;
 						$scope.currCodeBlock++;
 						$scope.codeBlocks.push({type: "normal"});
-						speak("Okay, I have ended your for loop. Press F to continue.");
+						speak("Okay, I have ended your for loop. Press F to say your next statement.");
 					}
 					else if (str.indexOf("stop while loop") !== -1) {
 						console.log("stop while loop");
 						$scope.currStep = 1;
 						$scope.currCodeBlock++;
 						$scope.codeBlocks.push({type: "normal"});
-						speak("Okay, I have ended your while loop. Press F to continue.");
+						speak("Okay, I have ended your while loop. Press F to say your next statement.");
 					}
 					else {
 						$scope.currStep = 1;
-						speak("Okay, I am processing your request. Press F to continue.");
+						speak("Okay, I heard " + fixText(finalTranscript.trim().toLowerCase()) + ". Press J to delete and F to say your next statement..");
 					}
 					document.querySelector('#interimText').innerHTML = "<span>Press F to speak.</span>";
 					finalTranscript = "";
@@ -294,7 +320,8 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		}
 		else if ($scope.currStep === 3) {
 			$scope.currentlyTalking = false;
-			speak("Okay, say your statement.", function () {
+			document.getElementById("startSpeakingAudio").play();
+			speak("", function () {
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -327,6 +354,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		else if ($scope.currStep === 4) {
 			$scope.currentlyTalking = false;
 			speak("What is the conditional for your while loop?", function () {
+				document.getElementById("startSpeakingAudio").play();
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -348,6 +376,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		else if ($scope.currStep === 5) {
 			$scope.currentlyTalking = false;
 			speak("Declare a counter for your for loop.", function () {
+				document.getElementById("startSpeakingAudio").play();
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -369,6 +398,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		else if ($scope.currStep === 6) {
 			$scope.currentlyTalking = false;
 			speak("Declare your conditional for the for loop.", function () {
+				document.getElementById("startSpeakingAudio").play();
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -390,6 +420,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		else if ($scope.currStep === 7) {
 			$scope.currentlyTalking = false;
 			speak("Declare a command to modify the counter at the end of each iteration.", function () {
+				document.getElementById("startSpeakingAudio").play();
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();

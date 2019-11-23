@@ -78,7 +78,7 @@ a {
     padding: 20px;
     position: relative;
     overflow-x: none;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 #lineNumbers, #compiledCodeOutput {
     font-family: Menlo, "Courier New", monospace !important;
@@ -86,7 +86,7 @@ a {
 }
 #projects {
     grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
+    grid-row: 2 / span 2;
     margin: 20px 20px 20px 0;
     background: #fff;
     border-radius: 2px;
@@ -95,14 +95,6 @@ a {
 }
 #projects .material-icons {
     font-size: 36px !important;
-}
-#speech {
-    grid-column: 2 / span 1;
-    grid-row: 3 / span 1;
-    margin: 0 20px 20px 0;
-    background: #fff;
-    border-radius: 2px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 .workflowStep {
 	margin: 5px;

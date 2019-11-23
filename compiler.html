@@ -30,7 +30,8 @@
 	        <div id="input">
 	        	<div id="workflowTable" ng-show="currMode === 0"></div>
 	        	<div class="workflowStep purple" ng-show="currMode === 0"><div class="type">...</div><div class="content" id="interimText"><span>Press F to speak.</span></div></div>
-				<textarea id="manualTextarea" style="width: 100%; height: 100%; border: 0; outline: none; resize: none; font-size: 16px;" ng-show="currMode === 1" placeholder="Type code..."></textarea>
+				<textarea id="lineNumbersTextarea" readonly="readonly" style="width: 20px; height: 100%; display: inline-block; text-align: right; border: 0; outline: none; resize: none; overflow: hidden; font-size: 16px;" ng-show="currMode === 1">1</textarea>
+				<textarea id="manualTextarea" style="width: calc(100% - 40px); height: 100%; border: 0; outline: none; resize: none; font-size: 16px;" ng-show="currMode === 1" placeholder="Type code..."></textarea>
 				<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px;">INPUT | <span id="switchMode" ng-click="switchMode()"><span ng-show="currMode === 0">Manual</span><span ng-show="currMode === 1">Speech</span> <b>&#x2192;</b></span></div>
 			</div>
         	<div id="output">
@@ -41,24 +42,22 @@
         	</div>
         	<div id="projects" style="overflow: hidden;">
         		<h3 style="margin: 0 0 10px 0; text-align: center;">Projects</h3>
-                <table id="projectsTable" style="display: none"></table>
-                <div style="text-align: center; display: none" id="noProjectsDiv">You do not have any projects.</div>
-                <i class="material-icons spinIcon" style="font-size: 36px !important; text-align: center; width: 100%;">autorenew</i>
-        	</div>
-        	<div id="speech">
-        		
-        	</div>
-		</div>
-		<!--<div id="keyboard">
-			<div id="keyboardheader">Keyboard</div>
-			<div class="key">output</div>
-			<div class="key">declare variable</div>
-			<div class="key">declare for loop</div>
-			<div class="key">declare while loop</div>
-			<div class="key">declare if conditional</div>
-			<div class="key">text</div>
-			<div class="key">integer</div>
-		</div>-->
+                <!--<table id="projectsTable" style="display: none"></table>-->
+				<i class="material-icons" style="font-size: 60px !important; text-align: center; width: 100%; color: #cdcdcd; margin-top: 50%;">perm_media</i>
+                <div style="text-align: center; color: #cdcdcd;" id="noProjectsDiv">You do not have any projects.</div>
+				<!--<i class="material-icons spinIcon" style="font-size: 36px !important; text-align: center; width: 100%;">autorenew</i>-->
+            </div>
+        </div>
+        <!--<div id="keyboard">
+            <div id="keyboardheader">Keyboard</div>
+            <div class="key">output</div>
+            <div class="key">declare variable</div>
+            <div class="key">declare for loop</div>
+            <div class="key">declare while loop</div>
+            <div class="key">declare if conditional</div>
+            <div class="key">text</div>
+            <div class="key">integer</div>
+        </div>-->
         <input type="text" id="userIdInput" style="display: none" />
         <input type="text" id="currProjNameInput" style="display: none" />
         <input type="text" id="currWorkflowInput" style="display: none" />
@@ -66,6 +65,18 @@
 		<input type="text" id="workflowMem" style="display: none" />
 	    <button type="button" style="display: none" id="addProjectButton"></button>
 		<button type="button" style="display: none" id="compiledCodeButton"></button>
+
+		<audio id="startSpeakingAudio">
+			<source src="startspeaking.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="stopSpeakingAudio">
+			<source src="stopspeaking.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="deleteStatementAudio">
+			<source src="deletestatement.mp3" type="audio/mpeg">
+		</audio>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
