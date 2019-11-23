@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Verbal Coding</title>
+        <link type="text/css" rel="stylesheet" href="styles.css" />
+        <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    </head>
+    <body ng-app="verbal-coding" ng-controller="MainController" my-enter="toggleRecording()">
+    	<div id="welcomeDiv">
+    		<h1>Verbal Coding</h1>
+			<div id="firebaseui-auth-container" style="display: none"></div>
+		</div>
+    	<div id="bodyContainer">
+			<div id="navigationBar">
+				<table>
+					<tr>
+						<td style="width: 55px;"><a href="http://verbalcoding.com" target="_blank"><img src="favicon.png" height="55" width="55" /></a></td>
+						<td style="color: white; font-size: 20px; font-weight: 300; padding-left: 5px; line-height: 1;"><div><a href="http://verbalcoding.com" target="_blank" style="text-decoration: none;">Verbal Coding</a></div><span style="font-weight: bold; font-size: 12px !important;">In association with <a href="http://www.hc-initiative.org/" target="_blank">MIT Humanistic Co-Design</a></span></td>
+						<td style="padding-bottom: 5px;">
+							<div id="signOut" class="menuItem" style="padding-right: 20px; padding-left: 20px;">Sign Out</div>
+	        				<div id="userName" class="menuItem"><i class="material-icons spinIcon" style="font-size: 36px !important; position: absolute; top: 12px; right: 100px;">autorenew</i></div>
+						</td>
+					</tr>
+				</table>
+	        </div>
+	        <div id="input">
+	        	<div id="workflowTable" ng-show="currMode === 0"></div>
+	        	<div class="workflowStep purple" ng-show="currMode === 0"><div class="type">...</div><div class="content" id="interimText"><span>Press F to speak.</span></div></div>
+				<textarea id="lineNumbersTextarea" readonly="readonly" style="width: 20px; height: 100%; display: inline-block; text-align: right; border: 0; outline: none; resize: none; overflow: hidden; font-size: 16px;" ng-show="currMode === 1">1</textarea>
+				<textarea id="manualTextarea" style="width: calc(100% - 40px); height: 100%; border: 0; outline: none; resize: none; font-size: 16px;" ng-show="currMode === 1" placeholder="Type code..."></textarea>
+				<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px;">INPUT | <span id="switchMode" ng-click="switchMode()"><span ng-show="currMode === 0">Manual</span><span ng-show="currMode === 1">Speech</span> <b>&#x2192;</b></span></div>
+			</div>
+        	<div id="output">
+				<div style="position: absolute; top: 10px; right: 15px; font-weight: bold; font-size: 14px; color: lime;">OUTPUT</div>
+				<div id="compiledCodeOutput">
+
+				</div>
+        	</div>
+        	<div id="projects" style="overflow: hidden;">
+        		<h3 style="margin: 0 0 10px 0; text-align: center;">Projects</h3>
+                <!--<table id="projectsTable" style="display: none"></table>-->
+				<i class="material-icons" style="font-size: 60px !important; text-align: center; width: 100%; color: #cdcdcd; margin-top: 50%;">perm_media</i>
+                <div style="text-align: center; color: #cdcdcd;" id="noProjectsDiv">You do not have any projects.</div>
+				<!--<i class="material-icons spinIcon" style="font-size: 36px !important; text-align: center; width: 100%;">autorenew</i>-->
+            </div>
+        </div>
+        <!--<div id="keyboard">
+            <div id="keyboardheader">Keyboard</div>
+            <div class="key">output</div>
+            <div class="key">declare variable</div>
+            <div class="key">declare for loop</div>
+            <div class="key">declare while loop</div>
+            <div class="key">declare if conditional</div>
+            <div class="key">text</div>
+            <div class="key">integer</div>
+        </div>-->
+        <input type="text" id="userIdInput" style="display: none" />
+        <input type="text" id="currProjNameInput" style="display: none" />
+        <input type="text" id="currWorkflowInput" style="display: none" />
+		<input type="text" id="compiledCode" style="display: none" />
+		<input type="text" id="workflowMem" style="display: none" />
+	    <button type="button" style="display: none" id="addProjectButton"></button>
+		<button type="button" style="display: none" id="compiledCodeButton"></button>
+
+		<audio id="startSpeakingAudio">
+			<source src="startspeaking.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="stopSpeakingAudio">
+			<source src="stopspeaking.mp3" type="audio/mpeg">
+		</audio>
+
+		<audio id="deleteStatementAudio">
+			<source src="deletestatement.mp3" type="audio/mpeg">
+		</audio>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <script type="text/javascript" src="angularapp.js"></script>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script type="text/javascript" src="https://www.gstatic.com/firebasejs/6.1.0/firebase.js"></script>
+        <!--<script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-firestore.js"></script>-->
+        <script type="text/javascript" src="firebaseapp.js"></script>
+	</body>
+</html>

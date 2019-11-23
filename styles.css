@@ -1,0 +1,258 @@
+*:not(.fa) {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+a {
+    color: white !important;
+}
+.notSignedIn {
+    background-image: url('background.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.material-icons {
+    font-size: 18px !important;
+
+}
+#switchMode {
+    transition: 0.3s ease all;
+    cursor: pointer;
+}
+#switchMode:hover {
+    color: #6A49F6;
+    text-decoration: underline;
+}
+#bodyContainer {
+    margin: 0 auto;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-template-rows: 60px 65% 25% auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+   	font-family: Helvetica, Arial, sans-serif;
+    background: #f5efff;
+}
+#navigationBar {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+    background: #6A49F6;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+#navigationBar table {
+    width: 100%;
+}
+#navigationBar img {
+    padding-left: 10px;
+}
+.listdiv::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+.listdiv::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+#input {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    margin: 20px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding: 10px;
+    position: relative;
+}
+#output {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    margin: 0 20px 20px 20px;
+    background: #000;
+    color: lime;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding: 20px;
+    position: relative;
+    overflow-x: none;
+    overflow-y: auto;
+}
+#lineNumbers, #compiledCodeOutput {
+    font-family: Menlo, "Courier New", monospace !important;
+    font-size: 14px;
+}
+#projects {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 2;
+    margin: 20px 20px 20px 0;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    padding: 20px 10px;
+}
+#projects .material-icons {
+    font-size: 36px !important;
+}
+.workflowStep {
+	margin: 5px;
+}
+.workflowStep .type {
+	padding: 5px 10px;
+	font-weight: bold;
+}
+.workflowStep .content {
+	position: relative;
+	padding: 5px 10px;
+	right: 5px;
+}
+.workflowStep .delete {
+    position: relative;
+    padding: 5px 10px 5px 0;
+    right: 5px;
+}
+.workflowStep .type, .workflowStep .content, .workflowStep .delete {
+	display: inline-block;
+}
+.workflowStep.purple div {
+    background: #a255ff;
+    color: white;
+}
+.workflowStep.yellow div {
+    background: #ffff8d;
+    color: black;
+}
+.menuItem {
+    float: right;
+    color: white;
+    font-weight: bold;
+}
+#signOut:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+#welcomeDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    color: white;
+}
+
+#bars, #bars2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20% 0;
+/*     background: black; */
+}
+
+.bar {
+    background: #555;
+    bottom: 1px;
+    height: 3px;
+    width: 10px;
+    margin: 0px 4px;
+    border-radius: 5px;
+    animation: sound 0ms -600ms linear infinite alternate;
+}
+.bar2 {
+    background: #555;
+    bottom: 1px;
+    height: 31px;
+    width: 10px;
+    margin: 10px 4px 0px 4px;
+    border-radius: 5px;
+    animation: sound 0ms -600ms linear infinite alternate;
+}
+.workflowStep:hover .delete {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.codePreview {
+    font-size: 14px;
+    color: lightgray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 250px;
+}
+
+@keyframes sound {
+    0% {
+       opacity: .35;
+        height: 3px; 
+    }
+    100% {
+        opacity: 1;       
+        height: 70px;        
+    }
+}
+
+.spinIcon {
+    -webkit-animation: spin 1s infinite linear;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.bar:nth-child(1)  { left: 1px; animation-duration: 474ms; }
+.bar:nth-child(2)  { left: 15px; animation-duration: 433ms; }
+.bar:nth-child(3)  { left: 29px; animation-duration: 407ms; }
+.bar:nth-child(4)  { left: 43px; animation-duration: 458ms; }
+.bar:nth-child(5)  { left: 57px; animation-duration: 400ms; }
+.bar:nth-child(6)  { left: 71px; animation-duration: 427ms; }
+.bar:nth-child(7)  { left: 85px; animation-duration: 441ms; }
+.bar:nth-child(8)  { left: 99px; animation-duration: 419ms; }
+.bar:nth-child(9)  { left: 113px; animation-duration: 487ms; }
+.bar:nth-child(10) { left: 127px; animation-duration: 442ms; }
+
+#keyboard {
+    position: absolute;
+    z-index: 9;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    text-align: center;
+    width: 300px;
+    height: 295px;
+    bottom: 10px;
+    left: 10px;
+}
+
+#keyboardheader {
+    padding: 10px 0;
+    cursor: move;
+    z-index: 10;
+    background-color: #6A49F6;
+    width: 300px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+#keyboard .key {
+    margin: 5px 10px;
+    padding: 5px;
+    background-color: #f1f1f1;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    cursor: pointer;
+}
+
+#keyboard .key:hover {
+    background-color: #A255FF;
+    color: white;
+}
