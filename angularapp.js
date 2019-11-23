@@ -1,4 +1,4 @@
-var app = angular.module("verbal-coding", []);
+var app = angular.module("verbal-coding", []); // NEW
 
 var currentlySpeaking = false;
 
@@ -73,7 +73,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
     	var message = new SpeechSynthesisUtterance();
     	var voices = window.speechSynthesis.getVoices();
     	message.voice = voices[0];
-    	message.rate = 0.75;
+    	message.rate = 1;
     	message.pitch = 1;
     	message.text = text;
 
@@ -264,7 +264,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		if ($scope.currStep === 1) {
 			$scope.currentlyTalking = false;
 			document.getElementById("startSpeakingAudio").play();
-			speak("", function () {
+			speak(".", function () {
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
@@ -321,7 +321,7 @@ var mainController = app.controller("MainController", ['$scope', function ($scop
 		else if ($scope.currStep === 3) {
 			$scope.currentlyTalking = false;
 			document.getElementById("startSpeakingAudio").play();
-			speak("", function () {
+			speak(".", function () {
 				$scope.currentlyTalking = true;
 				finalTranscript += " ";
 				recognition.start();
